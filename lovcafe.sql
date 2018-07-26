@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2018 at 09:21 PM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: Jul 26, 2018 at 10:06 PM
+-- Server version: 10.1.33-MariaDB
+-- PHP Version: 7.2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -29,50 +29,29 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `customer` (
-  `CID` int(10) NOT NULL,
-  `F_name` varchar(20) NOT NULL,
-  `M_name` varchar(20) NOT NULL,
-  `L_name` varchar(20) NOT NULL,
-  `Phone_no` int(13) UNSIGNED NOT NULL,
-  `Email` varchar(50) NOT NULL,
-  `House_no` int(3) NOT NULL,
-  `Street_no` int(4) NOT NULL,
-  `Area-name` varchar(30) NOT NULL,
-  `City` varchar(30) NOT NULL,
-  `ZIP` int(4) NOT NULL,
-  `Join_date` date NOT NULL,
-  `Password` varchar(50) NOT NULL
+  `customer_id` int(11) NOT NULL,
+  `firstName` varchar(30) NOT NULL,
+  `middleName` varchar(30) NOT NULL,
+  `lastName` varchar(30) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `house` varchar(30) DEFAULT NULL,
+  `street` varchar(30) DEFAULT NULL,
+  `area` varchar(30) NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `joinDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONSHIPS FOR TABLE `customer`:
---   `CID`
---       `order` -> `Cus_ID`
---
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dish`
+-- Table structure for table `dishes`
 --
 
-CREATE TABLE `dish` (
-  `Dish_ID` int(10) NOT NULL,
-  `D_name` varchar(50) NOT NULL
+CREATE TABLE `dishes` (
+  `dish_id` int(11) NOT NULL,
+  `dishName` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONSHIPS FOR TABLE `dish`:
---
-
---
--- Dumping data for table `dish`
---
-
-INSERT INTO `dish` (`Dish_ID`, `D_name`) VALUES
-(3, 'Carbonara'),
-(4, 'Spaghetti al pomodoro'),
-(5, 'Fettuccine al pomodoro');
 
 -- --------------------------------------------------------
 
@@ -81,56 +60,22 @@ INSERT INTO `dish` (`Dish_ID`, `D_name`) VALUES
 --
 
 CREATE TABLE `employee` (
-  `E_ID` int(10) NOT NULL,
-  `F_name` varchar(20) NOT NULL,
-  `M_name` varchar(20) NOT NULL,
-  `L_name` varchar(20) NOT NULL,
-  `Phone_no` int(13) UNSIGNED NOT NULL,
-  `Email` varchar(50) NOT NULL,
-  `House_no` int(3) NOT NULL,
-  `Street_no` int(4) NOT NULL,
-  `Area_name` varchar(30) NOT NULL,
-  `City` varchar(30) NOT NULL,
-  `ZIP` int(4) NOT NULL,
-  `Join_date` date NOT NULL,
-  `Job_type` varchar(30) NOT NULL,
-  `Password` varchar(30) NOT NULL
+  `employee_id` int(11) NOT NULL,
+  `firstName` varchar(30) NOT NULL,
+  `middleName` varchar(30) NOT NULL,
+  `lastName` varchar(30) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `age` int(11) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `house` varchar(30) DEFAULT NULL,
+  `street` varchar(30) DEFAULT NULL,
+  `area` varchar(30) NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `joinDate` date NOT NULL,
+  `job_type` varchar(30) NOT NULL,
+  `salary` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONSHIPS FOR TABLE `employee`:
---
-
---
--- Dumping data for table `employee`
---
-
-INSERT INTO `employee` (`E_ID`, `F_name`, `M_name`, `L_name`, `Phone_no`, `Email`, `House_no`, `Street_no`, `Area_name`, `City`, `ZIP`, `Join_date`, `Job_type`, `Password`) VALUES
-(1, 'Lamia', '', 'Tabassum', 924587, 'l.t@gmail.com', 0, 0, '', '', 0, '2018-05-07', '', ''),
-(2, 'Aditi', '', 'Bishas', 964356, 'a.b@gmail.com', 0, 0, '', '', 0, '2018-05-07', '', ''),
-(3, 'Iffat', 'Immami', 'Trisha', 926547, 'i.t@gmail.com', 0, 0, '', '', 0, '2018-05-25', '', ''),
-(4, 'Prasenjit', '', 'Das', 968454, 'p.d@gmail.com', 0, 0, '', '', 0, '2018-05-28', '', ''),
-(5, 'Tabassum', '', 'Kabir', 936272, 't.k@gmail.com', 0, 0, '', '', 0, '2018-06-02', '', ''),
-(6, 'Mavro', '', 'Louis', 96543, 'm.l@gmail.com', 0, 0, '', '', 0, '2018-06-03', '', ''),
-(8, 'David', 'Kwe', 'Chang', 97368, 'd.c@gmail.com', 0, 0, '', '', 0, '2018-06-03', '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `invoice`
---
-
-CREATE TABLE `invoice` (
-  `D_ID` int(10) NOT NULL,
-  `D_name` varchar(30) NOT NULL,
-  `Quantity` int(4) NOT NULL,
-  `Order_no` int(10) NOT NULL,
-  `Rating` int(2) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELATIONSHIPS FOR TABLE `invoice`:
---
 
 -- --------------------------------------------------------
 
@@ -139,16 +84,23 @@ CREATE TABLE `invoice` (
 --
 
 CREATE TABLE `order` (
-  `Order_no` int(10) NOT NULL,
-  `Cus_ID` int(10) NOT NULL,
-  `Emp_ID` int(10) NOT NULL
+  `order_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- RELATIONSHIPS FOR TABLE `order`:
---   `Order_no`
---       `invoice` -> `Order_no`
+-- Table structure for table `order_detail`
 --
+
+CREATE TABLE `order_detail` (
+  `dish_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `dishName` varchar(40) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -158,34 +110,34 @@ CREATE TABLE `order` (
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`CID`);
+  ADD PRIMARY KEY (`customer_id`);
 
 --
--- Indexes for table `dish`
+-- Indexes for table `dishes`
 --
-ALTER TABLE `dish`
-  ADD PRIMARY KEY (`Dish_ID`);
+ALTER TABLE `dishes`
+  ADD PRIMARY KEY (`dish_id`);
 
 --
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
-  ADD PRIMARY KEY (`E_ID`);
-
---
--- Indexes for table `invoice`
---
-ALTER TABLE `invoice`
-  ADD KEY `D_ID` (`D_ID`),
-  ADD KEY `Order_no` (`Order_no`);
+  ADD PRIMARY KEY (`employee_id`);
 
 --
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`Order_no`),
-  ADD KEY `Cus_ID` (`Cus_ID`),
-  ADD KEY `Emp_ID` (`Emp_ID`);
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `employee_id` (`employee_id`);
+
+--
+-- Indexes for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  ADD PRIMARY KEY (`dish_id`,`order_id`),
+  ADD KEY `order_id` (`order_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -195,41 +147,43 @@ ALTER TABLE `order`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `CID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `dish`
+-- AUTO_INCREMENT for table `dishes`
 --
-ALTER TABLE `dish`
-  MODIFY `Dish_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `dishes`
+  MODIFY `dish_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `E_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `Order_no` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `customer`
---
-ALTER TABLE `customer`
-  ADD CONSTRAINT `fk_customer_order` FOREIGN KEY (`CID`) REFERENCES `order` (`Cus_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `fk_order_invoice` FOREIGN KEY (`Order_no`) REFERENCES `invoice` (`Order_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  ADD CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`dish_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
